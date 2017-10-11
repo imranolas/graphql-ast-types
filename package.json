@@ -1,17 +1,19 @@
 {
   "name": "graphql-ast-types",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "build": "babel src --out-dir lib --source-maps inline",
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {
     "lodash": "^4.17.4"
   },
   "peerDependencies": {
-    "graphql": "*"
+    "graphql": "^0.11.7"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
