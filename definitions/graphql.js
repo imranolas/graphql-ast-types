@@ -5,40 +5,18 @@ import defineType, {
   assertValueType,
   assertEach,
   assertOneOf,
+  assertArrayOf,
   chain
 } from './index';
 
 type Token = any;
 type Source = any;
 
-/**
- * Contains a range of UTF-8 character offsets and token references that
- * identify the region of the source from which the AST derived.
- */
 export type Location = {
-  /**
-   * The character offset at which this Node begins.
-   */
   start: number,
-
-  /**
-   * The character offset at which this Node ends.
-   */
   end: number,
-
-  /**
-   * The Token at which this Node begins.
-   */
   startToken: Token,
-
-  /**
-   * The Token at which this Node ends.
-   */
   endToken: Token,
-
-  /**
-   * The Source document the AST represents.
-   */
   source: Source
 };
 
@@ -108,7 +86,7 @@ defineType('Document', {
   builder: ['definitions'],
   fields: {
     definitions: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Definition')))
+      validate: assertArrayOf(assertNodeType('Definition'))
     }
   }
 });
@@ -129,7 +107,7 @@ export type OperationDefinitionNode = {
 };
 
 defineType('OperationDefinition', {
-  builder: ['operation', 'name', 'variableDefinitions', 'directives', 'selectionSet'],
+  builder: ['operation', 'selectionSet', 'name', 'variableDefinitions', 'directives'],
   fields: {
     operation: {
       validate: assertValueType('string')
@@ -137,9 +115,20 @@ defineType('OperationDefinition', {
     name: {
       validate: assertNodeType('Name'),
       optional: true
+    },
+    variableDefinitions: {
+      validate: assertArrayOf(assertNodeType('VariableDefinition')),
+      optional: true
+    },
+    directives: {
+      validate: assertArrayOf(assertNodeType('Directive')),
+      optional: true
+    },
+    selectionSet: {
+      validate: assertNodeType('SelectionSet')
     }
   },
-  alias: ['DefinitionNode']
+  aliases: ['Definition']
 });
 
 // Note: subscription is an experimental non-spec addition.
@@ -195,7 +184,7 @@ defineType('SelectionSet', {
   builder: ['selections'],
   fields: {
     selections: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Selection')))
+      validate: assertArrayOf(assertNodeType('Selection'))
     }
   }
 });
@@ -223,18 +212,19 @@ defineType('Field', {
       optional: true
     },
     arguments: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Argument'))),
+      validate: assertArrayOf(assertNodeType('Argument')),
       optional: true
     },
     directives: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive'))),
+      validate: assertArrayOf(assertNodeType('Directive')),
       optional: true
     },
     selectionSet: {
       validate: assertNodeType('SelectionSet'),
       optional: true
     }
-  }
+  },
+  aliases: ['Selection']
 });
 
 export type ArgumentNode = {
@@ -269,10 +259,11 @@ defineType('FragmentSpread', {
   builder: ['name'],
   fields: {
     directives: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive'))),
+      validate: assertArrayOf(assertNodeType('Directive')),
       optional: true
     }
-  }
+  },
+  aliases: ['Selection']
 });
 
 export type InlineFragmentNode = {
@@ -288,7 +279,7 @@ defineType('InlineFragment', {
   fields: {
     directives: {
       optional: true,
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive')))
+      validate: assertArrayOf(assertNodeType('Directive'))
     },
     typeCondition: {
       optional: true,
@@ -297,7 +288,8 @@ defineType('InlineFragment', {
     selectionSet: {
       validate: assertNodeType('SelectionSet')
     }
-  }
+  },
+  aliases: ['Selection']
 });
 
 export type FragmentDefinitionNode = {
@@ -314,7 +306,7 @@ defineType('FragmentDefinition', {
   fields: {
     directives: {
       optional: true,
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive')))
+      validate: assertArrayOf(assertNodeType('Directive'))
     },
     name: {
       validate: assertNodeType('Name')
@@ -325,7 +317,8 @@ defineType('FragmentDefinition', {
     selectionSet: {
       validate: assertNodeType('SelectionSet')
     }
-  }
+  },
+  aliases: ['Definition']
 });
 
 // Values
@@ -440,7 +433,7 @@ defineType('ListValue', {
   builder: ['value'],
   fields: {
     value: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Value')))
+      validate: assertArrayOf(assertNodeType('Value'))
     }
   },
   aliases: ['Value']
@@ -456,7 +449,7 @@ defineType('ObjectValue', {
   builder: ['fields'],
   fields: {
     fields: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('ObjectField')))
+      validate: assertArrayOf(assertNodeType('ObjectField'))
     }
   },
   aliases: ['Value']
@@ -498,7 +491,7 @@ defineType('Directive', {
     },
     arguments: {
       optional: true,
-      validate: chain(assertValueType('array'), assertNodeType('Argument'))
+      validate: assertArrayOf(assertNodeType('Argument'))
     }
   }
 });
@@ -574,7 +567,7 @@ defineType('SchemaDefinition', {
   builder: ['directives', 'operationTypes'],
   fields: {
     directives: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive')))
+      validate: assertArrayOf(assertNodeType('Directive'))
     },
     operationTypes: {
       validate: chain(
@@ -628,7 +621,7 @@ defineType('ScalarTypeDefinition', {
     },
     directives: {
       optional: true,
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive')))
+      validate: assertArrayOf(assertNodeType('Directive'))
     }
   }
 });
@@ -650,14 +643,14 @@ defineType('ObjectTypeDefinition', {
     },
     directives: {
       optional: true,
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive')))
+      validate: assertArrayOf(assertNodeType('Directive'))
     },
     interfaces: {
       optional: true,
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('NamedType')))
+      validate: assertArrayOf(assertNodeType('NamedType'))
     },
     fields: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('FieldDefinition')))
+      validate: assertArrayOf(assertNodeType('FieldDefinition'))
     }
   }
 });
@@ -678,13 +671,13 @@ defineType('FieldDefinition', {
       validate: assertNodeType('Name')
     },
     arguments: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('InputValueDefinition')))
+      validate: assertArrayOf(assertNodeType('InputValueDefinition'))
     },
     type: {
       validate: assertNodeType('Type')
     },
     directives: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive')))
+      validate: assertArrayOf(assertNodeType('Directive'))
     }
   }
 });
@@ -711,7 +704,7 @@ defineType('InputValueDefinition', {
       validate: assertNodeType('Value')
     },
     directives: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive')))
+      validate: assertArrayOf(assertNodeType('Directive'))
     }
   }
 });
@@ -731,10 +724,10 @@ defineType('InterfaceTypeDefinition', {
       validate: assertNodeType('Name')
     },
     directives: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive')))
+      validate: assertArrayOf(assertNodeType('Directive'))
     },
     fields: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('FieldDefinition')))
+      validate: assertArrayOf(assertNodeType('FieldDefinition'))
     }
   }
 });
@@ -754,10 +747,10 @@ defineType('InputValueDefinition', {
       validate: assertNodeType('Name')
     },
     types: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('NamedType')))
+      validate: assertArrayOf(assertNodeType('NamedType'))
     },
     directives: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive')))
+      validate: assertArrayOf(assertNodeType('Directive'))
     }
   }
 });
@@ -777,11 +770,11 @@ defineType('EnumTypeDefinition', {
       validate: assertNodeType('Name')
     },
     values: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('EnumValueDefinition')))
+      validate: assertArrayOf(assertNodeType('EnumValueDefinition'))
     },
     directives: {
       optional: true,
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive')))
+      validate: assertArrayOf(assertNodeType('Directive'))
     }
   }
 });
@@ -801,7 +794,7 @@ defineType('EnumValueDefinition', {
     },
     directives: {
       optional: true,
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive')))
+      validate: assertArrayOf(assertNodeType('Directive'))
     }
   }
 });
@@ -822,10 +815,10 @@ defineType('InterfaceTypeDefinition', {
     },
     directives: {
       optional: true,
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Directive')))
+      validate: assertArrayOf(assertNodeType('Directive'))
     },
     fields: {
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('InputValueDefinition')))
+      validate: assertArrayOf(assertNodeType('InputValueDefinition'))
     }
   }
 });
@@ -860,12 +853,11 @@ defineType('DirectiveDefinition', {
       validate: assertNodeType('Name')
     },
     locations: {
-      optional: true,
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('Name')))
+      validate: assertArrayOf(assertNodeType('Name'))
     },
     arguments: {
       optional: true,
-      validate: chain(assertValueType('array'), assertEach(assertNodeType('InputValueDefinition')))
+      validate: assertArrayOf(assertNodeType('InputValueDefinition'))
     }
   }
 });
