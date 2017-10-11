@@ -5,12 +5,9 @@ module.exports = {
   },
   extends: ["formidable/configurations/es6-node"],
   plugins: ["prettier"],
-  // globals: {
-  //   Promise: true
-  // },
   env: {
     node: true
-    //   jest: true
+    jest: true
   },
   rules: {
     "no-unused-vars": [
@@ -40,11 +37,6 @@ module.exports = {
     "comma-dangle": ["error", "never"],
     "arrow-parens": ["error", "as-needed"],
     eqeqeq: ["error", "smart"],
-
-    //   'filenames/match-regex': 'off',
-    //   'filenames/match-exported': 'off',
-    //   'filenames/no-index': 'off',
-    //   'flowtype/require-valid-file-annotation': [2, 'always'],
 
     "prettier/prettier": [
       "error",
