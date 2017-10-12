@@ -4,8 +4,8 @@
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "jest src/**",
+    "test:watch": "yarn test -- --watch",
     "build": "babel src --out-dir lib --source-maps inline",
     "prepublishOnly": "yarn build"
   },

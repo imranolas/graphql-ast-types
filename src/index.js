@@ -1,7 +1,7 @@
 // @flow
 
 import loClone from 'lodash/clone';
-import './definitions/graphql';
+import './definitions/init';
 
 import { ALIAS_KEYS, NODE_FIELDS, BUILDER_KEYS } from './definitions';
 
