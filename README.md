@@ -9,6 +9,8 @@
 import * as t from 'graphql-ast-types';
 ```
 
+_The implementation here mimics that of `babel-types`. Thanks Babel team._
+
 ## API
 
 #### `t.is(name, Node)`
