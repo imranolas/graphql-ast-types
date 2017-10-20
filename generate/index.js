@@ -180,32 +180,37 @@ const fieldDefinitionTemplate = (isOptional, assertionAST) => tea.objectExpressi
   tea.objectProperty(tea.identifier('validate'), assertionAST)
 ]);
 
-const getNodeBabelFields = node => node.properties
-  .map(prop => {
-    const fieldName = prop.key.name;
-    if (blacklistedProps.includes(fieldName)) {
-      return undefined;
-    }
+const getNodeBabelFields = node => {
+  const fields = node.properties
+    .map(prop => {
+      const fieldName = prop.key.name;
+      if (blacklistedProps.includes(fieldName)) {
+        return undefined;
+      }
 
-    const optional = !!prop.optional;
-    const valueNode = prop.value;
-    const valueAssertionAST = determineValueAssertion(valueNode);
+      const optional = !!prop.optional;
+      const valueNode = prop.value;
+      const valueAssertionAST = determineValueAssertion(valueNode);
 
-    return tea.objectProperty(
-      tea.identifier(fieldName),
-      fieldDefinitionTemplate(optional, valueAssertionAST)
-    );
-  })
-  .filter(x => x !== undefined);
+      const ast = tea.objectProperty(
+        tea.identifier(fieldName),
+        fieldDefinitionTemplate(optional, valueAssertionAST)
+      );
+
+      return [optional, ast];
+    })
+    .filter(x => x !== undefined);
+
+  // Preserve order, but put non-optional fields first
+  const nonOptionalFields = fields.filter(([ opt ]) => !opt).map(arr => arr[1]);
+  const optionalFields = fields.filter(([ opt ]) => opt).map(arr => arr[1]);
+  return nonOptionalFields.concat(optionalFields);
+};
 
 const getNodeAliases = (nodeName, unions) => {
   const union = unions[nodeName] || new Set();
   return Array.from(union).map(getNodeNameWithoutSuffix);
 };
-
-const getNodeProperties = node => node.properties
-  .map(prop => prop.key.name)
-  .filter(propName => !blacklistedProps.includes(propName));
 
 const defineTypeCallTemplate = (nameAST, argAST, fieldAST, aliasAST) => {
   return tea.callExpression(
@@ -221,10 +226,12 @@ const defineTypeCallTemplate = (nameAST, argAST, fieldAST, aliasAST) => {
   );
 };
 
+const getArgsFromFields = fields => fields.map(field => field.key.name);
+
 const buildDefineTypeCall = (nodeName, unions, node) => {
   const name = getNodeNameWithoutSuffix(nodeName);
   const fields = getNodeBabelFields(node);
-  const args = getNodeProperties(node);
+  const args = getArgsFromFields(fields);
   const aliases = getNodeAliases(nodeName, unions);
 
   return defineTypeCallTemplate(
