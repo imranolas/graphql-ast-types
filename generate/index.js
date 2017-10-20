@@ -8,9 +8,13 @@ const template = require('babel-template');
 const tea = require('babel-types'); // The only right way to name this
 
 // Generate Flow AST
-const astFilePath = resolve(__dirname, '../node_modules/graphql/language/ast.js.flow');
-const astFile = readFileSync(astFilePath).toString();
-const ast = parse(astFile);
+const loadAST = () => {
+  const astFilePath = resolve(__dirname, '../node_modules/graphql/language/ast.js.flow');
+  const astFile = readFileSync(astFilePath).toString();
+  const ast = parse(astFile);
+
+  return ast;
+};
 
 // Node constants
 const blacklistedNodes = ['OperationTypeNode'];
@@ -232,9 +236,34 @@ const buildBabelTemplates = ast => {
   const { unions, nodes } = collectNodes(ast);
 
   return Object.keys(nodes).map(nodeName => {
+    console.log(`Generating ${nodeName}...`);
     const node = nodes[nodeName];
-    return generate(buildDefineTypeCall(nodeName, unions, node)).code;
+    const { code } = generate(buildDefineTypeCall(nodeName, unions, node));
+    return `/* Auto-generated Definition: ${nodeName} */\n${code}\n`;
   });
 };
 
-console.log(buildBabelTemplates(ast));
+const definitionTemplate = body => `
+import {
+  assertNodeType,
+  assertValueType,
+  assertEach,
+  assertOneOf,
+  assertArrayOf
+} from './index';
+
+export default defineType => {
+  ${body}
+};
+`;
+
+const generateDefinitionFile = ast => {
+  const definitionCalls = buildBabelTemplates(ast);
+  return definitionTemplate(definitionCalls.join('\n'));
+};
+
+const definitionFileContents = generateDefinitionFile(loadAST());
+const outputPath = resolve(__dirname, '../src/definitions/graphql.js');
+
+console.log('Save & Done.');
+writeFileSync(outputPath, definitionFileContents);
