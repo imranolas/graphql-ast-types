@@ -191,7 +191,10 @@ const getNodeBabelFields = node => node.properties
     const valueNode = prop.value;
     const valueAssertionAST = determineValueAssertion(valueNode);
 
-    return fieldDefinitionTemplate(optional, valueAssertionAST);
+    return tea.objectProperty(
+      tea.identifier(fieldName),
+      fieldDefinitionTemplate(optional, valueAssertionAST)
+    );
   })
   .filter(x => x !== undefined);
 
@@ -227,7 +230,7 @@ const buildDefineTypeCall = (nodeName, unions, node) => {
   return defineTypeCallTemplate(
     tea.stringLiteral(name),
     tea.arrayExpression(args.map(arg => tea.stringLiteral(arg))),
-    tea.arrayExpression(fields),
+    tea.objectExpression(fields),
     tea.arrayExpression(aliases.map(alias => tea.stringLiteral(alias))),
   );
 };
