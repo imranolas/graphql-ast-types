@@ -187,7 +187,7 @@ const getNodeBabelFields = node => node.properties
       return undefined;
     }
 
-    const optional = !!(prop.key.optional || prop.value.optional);
+    const optional = !!prop.optional;
     const valueNode = prop.value;
     const valueAssertionAST = determineValueAssertion(valueNode);
 
