@@ -58,3 +58,8 @@ typings/
 .env
 
 lib
+
+#####################################
+# GENERATED FILES
+#####################################
+src/definitions/graphql.js

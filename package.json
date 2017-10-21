@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest src/**",
     "test:watch": "yarn test -- --watch",
+    "prebuild": "yarn generate",
     "build": "babel src --out-dir lib --source-maps inline",
+    "generate": "node ./generate/index.js",
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
@@ -19,6 +21,7 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
+    "babel-generator": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-flow": "^6.23.0",
     "babel-template": "^6.26.0",
@@ -31,6 +34,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-prettier": "^2.3.1",
     "flow-bin": "^0.56.0",
+    "flow-parser": "^0.57.3",
     "graphql": "^0.11.7",
     "jest": "^21.2.1",
     "prettier": "^1.7.4",
