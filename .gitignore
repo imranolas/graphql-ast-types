@@ -63,4 +63,4 @@ lib
 # GENERATED FILES
 #####################################
 src/definitions/graphql.js
-lib/index.flow.js
+src/index.flow.js

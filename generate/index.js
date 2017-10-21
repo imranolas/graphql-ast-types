@@ -17,7 +17,7 @@ const loadAST = () => {
 const definitionOutputPath = resolve(__dirname, '../src/definitions/graphql.js');
 writeFileSync(definitionOutputPath, generateDefinitionFile(loadAST()));
 
-const flowtypeOutputPath = resolve(__dirname, '../lib/index.flow.js');
+const flowtypeOutputPath = resolve(__dirname, '../src/index.flow.js');
 writeFileSync(flowtypeOutputPath, generateFlowTypesFile(loadAST()));
 
 console.log('Save & Done.');
