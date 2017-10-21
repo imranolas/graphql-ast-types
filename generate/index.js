@@ -3,6 +3,7 @@ const { writeFileSync, readFileSync } = require('fs');
 
 const { parse } = require('flow-parser');
 const generateDefinitionFile = require('./definitions');
+const generateFlowTypesFile = require('./flowtypes');
 
 // Generate Flow AST
 const loadAST = () => {
@@ -15,5 +16,8 @@ const loadAST = () => {
 
 const definitionOutputPath = resolve(__dirname, '../src/definitions/graphql.js');
 writeFileSync(definitionOutputPath, generateDefinitionFile(loadAST()));
+
+const flowtypeOutputPath = resolve(__dirname, '../src/index.flow.js');
+writeFileSync(flowtypeOutputPath, generateFlowTypesFile(loadAST()));
 
 console.log('Save & Done.');
