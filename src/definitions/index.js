@@ -1,5 +1,5 @@
 // @flow
-const t = () => require('../index');
+const t = require('../index');
 
 type Validator = {
   validate: Function,
@@ -20,6 +20,7 @@ type Option = {
  * Used to define an AST node.
  * @param {String} type The AST node name
  * @param {Object} opts Type definition object
+ * @returns {void}
  */
 export default function defineType(
   type: string,
@@ -86,7 +87,7 @@ export function assertOneOf(...vals: Array<string>): Function {
 
 export function assertNodeType(...types: Array<string>): Function {
   function validate(node, key, val) {
-    const valid = types.every(type => t().is(type, val));
+    const valid = types.every(type => t.is(type, val));
 
     if (!valid) {
       throw new TypeError(
@@ -101,7 +102,7 @@ export function assertNodeType(...types: Array<string>): Function {
 
 export function assertNodeOrValueType(...types: Array<string>): Function {
   function validate(node, key, val) {
-    const valid = types.every(type => getType(val) === type || t().is(type, val));
+    const valid = types.every(type => getType(val) === type || t.is(type, val));
 
     if (!valid) {
       throw new TypeError(
