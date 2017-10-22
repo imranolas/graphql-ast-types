@@ -72,5 +72,6 @@ module.exports = {
   isUnionTypeAlias,
   getNodeNameWithoutSuffix,
   isPropBlacklisted,
-  isNodeBlacklisted
+  isNodeBlacklisted,
+  blacklistedNodes
 };

@@ -7,11 +7,9 @@ const {
   getNodeNameWithoutSuffix,
   isPropBlacklisted,
   isNodeBlacklisted,
-  isNodeName
+  isNodeName,
+  blacklistedNodes
 } = require('./helpers');
-
-const makeModuleNode = statements =>
-  t.declareModule(t.stringLiteral('babel-ast-types'), t.blockStatement(statements));
 
 const makeTypedIdentifier = (nodeName, params, returnAnnotation) => {
   const name = getNodeNameWithoutSuffix(nodeName);
@@ -67,7 +65,13 @@ const buildBabelTemplates = ast => {
     .map(nodeName => makeDeclaration(nodeName, nodes[nodeName]))
     .reduce((a = [], ts) => a.concat(ts));
 
-  return t.program([makeImportStatement(Object.keys(nodes)), makeModuleNode(nodeStatements)]);
+  importNodeNames = Object.keys(nodes).concat(blacklistedNodes);
+  importAliasNames = Object.keys(unions).reduce((s, k) => new Set([...s, ...unions[k]]), new Set());
+
+  return t.program([
+    makeImportStatement([...importNodeNames, ...Array.from(importAliasNames)]),
+    ...nodeStatements
+  ]);
 };
 
 const generateDefinitionContent = ast => {
@@ -76,5 +80,11 @@ const generateDefinitionContent = ast => {
 };
 
 module.exports = function generateDefinitionFile(ast) {
-  return generateDefinitionContent(ast);
+  return `
+// @flow
+// AUTO-GENERATED
+${generateDefinitionContent(ast)}
+
+declare export function is(nodeName: string, node: any): boolean;
+  `;
 };
