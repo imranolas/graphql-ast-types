@@ -1,14 +1,10 @@
-const { writeFileSync } = require('fs');
-
 const tea = require('babel-types'); // The only right way to name this
 const { default: generate } = require('babel-generator');
-const template = require('babel-template');
 
 const {
   collectNodes,
   getNodeNameWithoutSuffix,
   isPropBlacklisted,
-  isNodeBlacklisted,
   isNodeName
 } = require('./helpers');
 

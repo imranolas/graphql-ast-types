@@ -10,6 +10,7 @@ module.exports = {
   },
   rules: {
     'max-statements': 0,
+    'max-params': 0,
     'no-unused-vars': [
       'error',
       {

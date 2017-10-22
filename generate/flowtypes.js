@@ -1,13 +1,10 @@
 const t = require('babel-types');
 const { default: generate } = require('babel-generator');
-const template = require('babel-template');
 
 const {
   collectNodes,
   getNodeNameWithoutSuffix,
   isPropBlacklisted,
-  isNodeBlacklisted,
-  isNodeName,
   blacklistedNodes
 } = require('./helpers');
 
@@ -25,8 +22,12 @@ const makeTypedIdentifier = (nodeName, params, returnAnnotation) => {
 
 const makeDeclaration = (nodeName, node) => {
   const args = node.properties.filter(({ key }) => !isPropBlacklisted(key.name)).sort((a, b) => {
-    if (a.optional === b.optional) return 0;
-    if (a.optional) return 1;
+    if (a.optional === b.optional) {
+      return 0;
+    }
+    if (a.optional) {
+      return 1;
+    }
     return -1;
   });
 
@@ -49,7 +50,7 @@ const makeDeclaration = (nodeName, node) => {
   ];
 };
 
-makeImportStatement = nodeKeys => {
+const makeImportStatement = nodeKeys => {
   return Object.assign(
     t.importDeclaration(
       nodeKeys.map(nodeKey => t.importSpecifier(t.identifier(nodeKey), t.identifier(nodeKey))),
@@ -65,8 +66,11 @@ const buildBabelTemplates = ast => {
     .map(nodeName => makeDeclaration(nodeName, nodes[nodeName]))
     .reduce((a = [], ts) => a.concat(ts));
 
-  importNodeNames = Object.keys(nodes).concat(blacklistedNodes);
-  importAliasNames = Object.keys(unions).reduce((s, k) => new Set([...s, ...unions[k]]), new Set());
+  const importNodeNames = Object.keys(nodes).concat(blacklistedNodes);
+  const importAliasNames = Object.keys(unions).reduce(
+    (s, k) => new Set([...s, ...unions[k]]),
+    new Set()
+  );
 
   return t.program([
     makeImportStatement([...importNodeNames, ...Array.from(importAliasNames)]),
