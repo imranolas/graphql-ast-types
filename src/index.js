@@ -1,6 +1,5 @@
 // @flow
 
-import loClone from 'lodash/clone';
 import './definitions/init';
 
 import { ALIAS_KEYS, NODE_FIELDS, BUILDER_KEYS } from './definitions';
@@ -134,7 +133,7 @@ Object.keys(t.BUILDER_KEYS).forEach(type => {
 
     const node = keys.reduce(
       (node, key, i) => {
-        let arg = args[i] || t.NODE_FIELDS[type][key].default;
+        const arg = args[i] || t.NODE_FIELDS[type][key].default;
         return Object.assign({ [key]: arg }, node);
       },
       { kind: type }

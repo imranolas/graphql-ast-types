@@ -1,45 +1,46 @@
 module.exports = {
-  parser: "babel-eslint",
+  parser: 'babel-eslint',
   parserOptions: {
-    sourceType: "module"
+    sourceType: 'module'
   },
-  extends: ["formidable/configurations/es6-node"],
-  plugins: ["prettier"],
+  extends: ['formidable/configurations/es6-node'],
+  plugins: ['prettier'],
   env: {
     node: true
-    jest: true
   },
   rules: {
-    "no-unused-vars": [
-      "error",
+    'max-statements': 0,
+    'max-params': 0,
+    'no-unused-vars': [
+      'error',
       {
-        vars: "all",
-        args: "after-used",
+        vars: 'all',
+        args: 'after-used',
         ignoreRestSiblings: false,
-        argsIgnorePattern: "^_"
+        argsIgnorePattern: '^_'
       }
     ],
-    "no-magic-numbers": "off",
-    "no-invalid-this": "off",
-    "no-unused-expressions": "off",
-    quotes: ["error", "single", { avoidEscape: true }],
+    'no-magic-numbers': 'off',
+    'no-invalid-this': 'off',
+    'no-unused-expressions': 'off',
+    quotes: ['error', 'single', { avoidEscape: true }],
     indent: [
-      "error",
+      'error',
       2,
       {
         SwitchCase: 1
       }
     ],
-    "new-cap": "off",
-    "func-style": "off",
-    "generator-star-spacing": "off",
-    "max-len": "off",
-    "comma-dangle": ["error", "never"],
-    "arrow-parens": ["error", "as-needed"],
-    eqeqeq: ["error", "smart"],
+    'new-cap': 'off',
+    'func-style': 'off',
+    'generator-star-spacing': 'off',
+    'max-len': 'off',
+    'comma-dangle': ['error', 'never'],
+    'arrow-parens': ['error', 'as-needed'],
+    eqeqeq: ['error', 'smart'],
 
-    "prettier/prettier": [
-      "error",
+    'prettier/prettier': [
+      'error',
       {
         singleQuote: true,
         printWidth: 100
