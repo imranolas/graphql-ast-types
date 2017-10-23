@@ -12,17 +12,15 @@ const t = exports; // Maps all exports to t
  */
 
 function registerType(type: string) {
-  let is = t[`is${type}`];
-  if (!is) {
-    is = t[`is${type}`] = function is(node, opts) {
-      return t.is(type, node, opts);
-    };
-  }
+  const key = `is${type}`;
 
-  t[`assert${type}`] = function assert(node, opts) {
-    opts = opts || {};
-    if (!is(node, opts)) {
-      throw new Error(`Expected type ${JSON.stringify(type)} with option ${JSON.stringify(opts)}`);
+  const _isType = t[key] !== undefined
+    ? t[key]
+    : t[key] = (node, opts) => t.is(type, node, opts);
+
+  t[`assert${type}`] = (node, opts = {}) => {
+    if (!_isType(node, opts)) {
+      throw new Error(`Expected type "${type}" with option ${JSON.stringify(opts)}`);
     }
   };
 }
@@ -33,7 +31,7 @@ export { ALIAS_KEYS, NODE_FIELDS, BUILDER_KEYS };
  * Registers `is[Type]` and `assert[Type]` for all types.
  */
 
-for (const type in t.VISITOR_KEYS) {
+for (const type in t.NODE_FIELDS) {
   registerType(type);
 }
 
@@ -41,24 +39,27 @@ for (const type in t.VISITOR_KEYS) {
  * Flip `ALIAS_KEYS` for faster access in the reverse direction.
  */
 
-t.FLIPPED_ALIAS_KEYS = {};
+export const TYPES = [];
 
-Object.keys(t.ALIAS_KEYS).forEach(type => {
-  t.ALIAS_KEYS[type].forEach(alias => {
-    t.FLIPPED_ALIAS_KEYS[alias] = (t.FLIPPED_ALIAS_KEYS[alias] || []).concat([type]);
+t.FLIPPED_ALIAS_KEYS = Object.keys(t.ALIAS_KEYS).reduce((acc, type) => {
+  const aliasKeys = t.ALIAS_KEYS[type];
+
+  aliasKeys.forEach(alias => {
+    if (acc[alias] === undefined) {
+      TYPES.push(alias); // Populate `TYPES` with FLIPPED_ALIAS_KEY(S)
+
+      // Registers `is[Alias]` and `assert[Alias]` functions for all aliases.
+      t[`${alias.toUpperCase()}_TYPES`] = acc[alias];
+      registerType(alias);
+
+      acc[alias] = [];
+    }
+
+    acc[alias].push(type);
   });
-});
 
-/**
- * Registers `is[Alias]` and `assert[Alias]` functions for all aliases.
- */
-
-Object.keys(t.FLIPPED_ALIAS_KEYS).forEach(type => {
-  t[`${type.toUpperCase()}_TYPES`] = t.FLIPPED_ALIAS_KEYS[type];
-  registerType(type);
-});
-
-export const TYPES = Object.keys(t.FLIPPED_ALIAS_KEYS);
+  return acc;
+}, {});
 
 /**
  * Returns whether `node` is of given `type`.
@@ -120,7 +121,7 @@ export function isType(nodeType: string, targetType: string): boolean {
  * a builder function that validates incoming arguments and returns a valid AST node.
  */
 
-Object.keys(t.BUILDER_KEYS).forEach(type => {
+for (const type in t.BUILDER_KEYS) {
   const keys = t.BUILDER_KEYS[type];
 
   function builder(...args) {
@@ -146,9 +147,8 @@ Object.keys(t.BUILDER_KEYS).forEach(type => {
     return node;
   }
 
-  t[type] = builder;
   t[type[0].toLowerCase() + type.slice(1)] = builder;
-});
+}
 
 /**
  * Executes the field validators for a given node
