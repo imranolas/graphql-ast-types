@@ -161,7 +161,6 @@ const buildBabelTemplates = ast => {
   const { unions, nodes } = collectNodes(ast);
 
   return Object.keys(nodes).map(nodeName => {
-    console.log(`Generating ${nodeName}...`);
     const node = nodes[nodeName];
     const { code } = generate(buildDefineTypeCall(nodeName, unions, node));
     return `/* Auto-generated Definition: ${nodeName} */\n${code}\n`;

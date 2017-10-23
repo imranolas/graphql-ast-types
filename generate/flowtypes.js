@@ -32,11 +32,12 @@ const makeDeclaration = (nodeName, node) => {
   });
 
   const anyNode = [{ key: t.identifier('node'), value: t.anyTypeAnnotation() }];
+  const fnNodeName = nodeName[0].toLowerCase() + nodeName.slice(1);
 
   return [
     t.declareExportDeclaration(
       t.declareFunction(
-        makeTypedIdentifier(nodeName, args, t.genericTypeAnnotation(t.identifier(nodeName)))
+        makeTypedIdentifier(fnNodeName, args, t.genericTypeAnnotation(t.identifier(nodeName)))
       )
     ),
     t.declareExportDeclaration(
