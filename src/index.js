@@ -1,8 +1,8 @@
 // @flow
 
-import './definitions/init';
+require('./definitions/init');
 
-import { ALIAS_KEYS, NODE_FIELDS, BUILDER_KEYS } from './definitions';
+const { ALIAS_KEYS, NODE_FIELDS, BUILDER_KEYS } = require('./definitions');
 
 const t = exports; // Maps all exports to t
 
@@ -69,11 +69,11 @@ t.FLIPPED_ALIAS_KEYS = Object.keys(t.ALIAS_KEYS).reduce((acc, type) => {
  */
 
 export function is(type: string, node: Object, opts?: Object): boolean {
-  if (!node) {
+  if (node === null || typeof node !== 'object') {
     return false;
   }
 
-  const matches = isType(node.type, type);
+  const matches = isType(node.kind, type);
   if (!matches) {
     return false;
   }
@@ -123,6 +123,7 @@ export function isType(nodeType: string, targetType: string): boolean {
 
 for (const type in t.BUILDER_KEYS) {
   const keys = t.BUILDER_KEYS[type];
+  const fields = t.NODE_FIELDS[type];
 
   function builder(...args) {
     if (args.length > keys.length) {
@@ -134,8 +135,8 @@ for (const type in t.BUILDER_KEYS) {
 
     const node = keys.reduce(
       (node, key, i) => {
-        const arg = args[i] || t.NODE_FIELDS[type][key].default;
-        return Object.assign({ [key]: arg }, node);
+        node[key] = (args[i] === undefined ? fields[key].default : args[i]);
+        return node;
       },
       { kind: type }
     );
@@ -155,20 +156,21 @@ for (const type in t.BUILDER_KEYS) {
  */
 
 export function validate(node?: Object, key: string, val: any) {
-  if (!node) {
+  if (node === null || typeof node !== 'object') {
     return;
   }
 
-  const fields = t.NODE_FIELDS[node.type];
-  if (!fields) {
+  const fields = t.NODE_FIELDS[node.kind];
+  if (fields === undefined) {
     return;
   }
 
   const field = fields[key];
-  if (!field || !field.validate) {
+  if (field === undefined || field.validate === undefined) {
     return;
   }
-  if (field.optional && val == null) {
+
+  if (field.optional && (val === undefined || val === null)) {
     return;
   }
 
@@ -180,10 +182,8 @@ export function validate(node?: Object, key: string, val: any) {
  */
 
 export function shallowEqual(actual: Object, expected: Object): boolean {
-  const keys = Object.keys(expected);
-
-  for (const key of keys) {
-    if (actual[key] !== expected[key]) {
+  for (const key in expected) {
+    if (expected.hasOwnProperty(key) && actual[key] !== expected[key]) {
       return false;
     }
   }
