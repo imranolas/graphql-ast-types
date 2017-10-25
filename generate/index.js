@@ -4,6 +4,7 @@ const { writeFileSync, readFileSync } = require('fs');
 const { parse } = require('flow-parser');
 const generateDefinitionFile = require('./definitions');
 const generateFlowTypesFile = require('./flowtypes');
+const generateDocFile = require('./docs');
 
 // Generate Flow AST
 const loadAST = () => {
@@ -19,5 +20,8 @@ writeFileSync(definitionOutputPath, generateDefinitionFile(loadAST()));
 
 const flowtypeOutputPath = resolve(__dirname, '../src/index.js.flow');
 writeFileSync(flowtypeOutputPath, generateFlowTypesFile(loadAST()));
+
+const docFileOutputPath = resolve(__dirname, '../api.md');
+writeFileSync(docFileOutputPath, generateDocFile(loadAST()));
 
 console.log('Save & Done.');
