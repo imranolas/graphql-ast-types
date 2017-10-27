@@ -1,4 +1,4 @@
 import defineType from './index';
 import graphqlDef from './graphql';
 
-graphqlDef(defineType);
+graphqlDef().forEach(([name, params]) => defineType(name, params));
