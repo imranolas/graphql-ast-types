@@ -2,19 +2,40 @@ const t = require('babel-types');
 
 const astSource = 'https://github.com/graphql/graphql-js/blob/v0.11.7/src/language/ast.js';
 
-const {
-  collectNodes,
-  getNodeNameWithoutSuffix,
-  isPropBlacklisted,
-  blacklistedNodes
-} = require('./helpers');
+const { collectNodes, getNodeNameWithoutSuffix, isPropBlacklisted } = require('./helpers');
+
+const getValueType = node => {
+  if (t.isGenericTypeAnnotation(node)) {
+    return node.id.name;
+  }
+
+  return node.type;
+};
 
 const makeDocstrings = (nodeName, node) => {
   const nodeNameShort = getNodeNameWithoutSuffix(nodeName);
   const fnName = nodeNameShort.charAt(0).toLowerCase() + nodeNameShort.slice(1);
+
+  const args = node.properties.filter(({ key }) => !isPropBlacklisted(key.name)).sort((a, b) => {
+    if (a.optional === b.optional) {
+      return 0;
+    }
+    if (a.optional) {
+      return 1;
+    }
+    return -1;
+  });
+
+  const argString = args
+    .map(({ key, value, optional }) => {
+      const opt = optional ? '?' : '';
+      return `${key.name}: ${opt}${getValueType(value)}`;
+    })
+    .join(', ');
+
   return [
     `### ${nodeNameShort}`,
-    `t.${fnName}(): [${nodeName}](${astSource}#L${node.loc.start.line})`,
+    `t.${fnName}(${argString}): [${nodeName}](${astSource}#L${node.loc.start.line})`,
     `t.is${nodeNameShort}(node: any): boolean`,
     `t.assert${nodeNameShort}(node: any): void`
   ];

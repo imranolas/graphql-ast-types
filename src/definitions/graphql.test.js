@@ -1,7 +1,7 @@
 import * as t from '../index';
 import { print } from 'graphql/language';
 
-test('', () => {
+test('Serialized query', () => {
   const ast = t.document([
     t.operationDefinition(
       'query',
