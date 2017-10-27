@@ -19,10 +19,16 @@ _The implementation here mimics that of `babel-types`. Thanks Babel team._
 The following is an example of how to build a simple query with AST types.
 
 ```js
+import * as t from 'graphql-ast-types';
+import { print } from 'graphql/language';
+
 const ast = t.document([
   t.operationDefinition(
     'query',
-    t.selectionSet([t.field(t.name('foo')), t.field(t.name('bar'))])
+    t.selectionSet([
+      t.field(t.name('foo')),
+      t.field(t.name('bar'))
+    ])
   )
 ]);
 
@@ -34,21 +40,18 @@ query {
   bar
 }
 */
-
 ```
 
 In addition, method calls are validated for correctness and accompanied by `is` and `assert` helpers.
 
 ```js
-t.isName({kind: 'Name'});
-// true
-t.assert({kind; 'Name'});
+t.isName(t.name('Hello')); // true
 
-t.isName({kind: 'IntValue'});
-// false
-t.assert({kind: 'IntValue'});
-// Error
+t.isName({ kind: 'Name' }); // true
+t.assert({ kind: 'Name' }); // no error
 
+t.isName({ kind: 'IntValue' }); // false
+t.assert({ kind: 'IntValue' }); // error
 ```
 
 The full API can be found [here](https://github.com/imranolas/graphql-ast-types/blob/master/api.md).
