@@ -27,4 +27,13 @@ describe('GraphQL AST types', () => {
       }
     `).trim());
   });
+
+  describe('GraphQL Definitions', () => {
+    it('matches the existing snapshot', () => {
+      expect(t.NODE_FIELDS).toMatchSnapshot('Node Fields');
+      expect(t.ALIAS_KEYS).toMatchSnapshot('Alias Keys');
+      expect(t.BUILDER_KEYS).toMatchSnapshot('Builder Keys');
+      expect(t.FLIPPED_ALIAS_KEYS).toMatchSnapshot('Flipped Alias Keys');
+    });
+  });
 });

@@ -1,0 +1,771 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alias Keys 1`] = `
+Object {
+  "Argument": Array [
+    "AST",
+  ],
+  "BooleanValue": Array [
+    "AST",
+    "Value",
+  ],
+  "Directive": Array [
+    "AST",
+  ],
+  "DirectiveDefinition": Array [
+    "AST",
+    "TypeSystemDefinition",
+  ],
+  "Document": Array [
+    "AST",
+  ],
+  "EnumTypeDefinition": Array [
+    "AST",
+    "TypeDefinition",
+  ],
+  "EnumValue": Array [
+    "AST",
+    "Value",
+  ],
+  "EnumValueDefinition": Array [
+    "AST",
+  ],
+  "Field": Array [
+    "AST",
+    "Selection",
+  ],
+  "FieldDefinition": Array [
+    "AST",
+  ],
+  "FloatValue": Array [
+    "AST",
+    "Value",
+  ],
+  "FragmentDefinition": Array [
+    "AST",
+    "Definition",
+  ],
+  "FragmentSpread": Array [
+    "AST",
+    "Selection",
+  ],
+  "InlineFragment": Array [
+    "AST",
+    "Selection",
+  ],
+  "InputObjectTypeDefinition": Array [
+    "AST",
+    "TypeDefinition",
+  ],
+  "InputValueDefinition": Array [
+    "AST",
+  ],
+  "IntValue": Array [
+    "AST",
+    "Value",
+  ],
+  "InterfaceTypeDefinition": Array [
+    "AST",
+    "TypeDefinition",
+  ],
+  "ListType": Array [
+    "AST",
+    "Type",
+  ],
+  "ListValue": Array [
+    "AST",
+    "Value",
+  ],
+  "Name": Array [
+    "AST",
+  ],
+  "NamedType": Array [
+    "AST",
+    "Type",
+  ],
+  "NonNullType": Array [
+    "AST",
+    "Type",
+  ],
+  "NullValue": Array [
+    "AST",
+    "Value",
+  ],
+  "ObjectField": Array [
+    "AST",
+  ],
+  "ObjectTypeDefinition": Array [
+    "AST",
+    "TypeDefinition",
+  ],
+  "ObjectValue": Array [
+    "AST",
+    "Value",
+  ],
+  "OperationDefinition": Array [
+    "AST",
+    "Definition",
+  ],
+  "OperationTypeDefinition": Array [
+    "AST",
+  ],
+  "ScalarTypeDefinition": Array [
+    "AST",
+    "TypeDefinition",
+  ],
+  "SchemaDefinition": Array [
+    "AST",
+    "TypeSystemDefinition",
+  ],
+  "SelectionSet": Array [
+    "AST",
+  ],
+  "StringValue": Array [
+    "AST",
+    "Value",
+  ],
+  "TypeExtensionDefinition": Array [
+    "AST",
+    "TypeSystemDefinition",
+  ],
+  "UnionTypeDefinition": Array [
+    "AST",
+    "TypeDefinition",
+  ],
+  "Variable": Array [
+    "AST",
+    "Value",
+  ],
+  "VariableDefinition": Array [
+    "AST",
+  ],
+}
+`;
+
+exports[`Builder Keys 1`] = `
+Object {
+  "Argument": Array [
+    "name",
+    "value",
+  ],
+  "BooleanValue": Array [
+    "value",
+  ],
+  "Directive": Array [
+    "name",
+    "arguments",
+  ],
+  "DirectiveDefinition": Array [
+    "name",
+    "locations",
+    "arguments",
+  ],
+  "Document": Array [
+    "definitions",
+  ],
+  "EnumTypeDefinition": Array [
+    "name",
+    "values",
+    "directives",
+  ],
+  "EnumValue": Array [
+    "value",
+  ],
+  "EnumValueDefinition": Array [
+    "name",
+    "directives",
+  ],
+  "Field": Array [
+    "name",
+    "alias",
+    "arguments",
+    "directives",
+    "selectionSet",
+  ],
+  "FieldDefinition": Array [
+    "name",
+    "arguments",
+    "type",
+    "directives",
+  ],
+  "FloatValue": Array [
+    "value",
+  ],
+  "FragmentDefinition": Array [
+    "name",
+    "typeCondition",
+    "selectionSet",
+    "directives",
+  ],
+  "FragmentSpread": Array [
+    "name",
+    "directives",
+  ],
+  "InlineFragment": Array [
+    "selectionSet",
+    "typeCondition",
+    "directives",
+  ],
+  "InputObjectTypeDefinition": Array [
+    "name",
+    "fields",
+    "directives",
+  ],
+  "InputValueDefinition": Array [
+    "name",
+    "type",
+    "defaultValue",
+    "directives",
+  ],
+  "IntValue": Array [
+    "value",
+  ],
+  "InterfaceTypeDefinition": Array [
+    "name",
+    "fields",
+    "directives",
+  ],
+  "ListType": Array [
+    "type",
+  ],
+  "ListValue": Array [
+    "values",
+  ],
+  "Name": Array [
+    "value",
+  ],
+  "NamedType": Array [
+    "name",
+  ],
+  "NonNullType": Array [
+    "type",
+  ],
+  "NullValue": Array [],
+  "ObjectField": Array [
+    "name",
+    "value",
+  ],
+  "ObjectTypeDefinition": Array [
+    "name",
+    "fields",
+    "interfaces",
+    "directives",
+  ],
+  "ObjectValue": Array [
+    "fields",
+  ],
+  "OperationDefinition": Array [
+    "operation",
+    "selectionSet",
+    "name",
+    "variableDefinitions",
+    "directives",
+  ],
+  "OperationTypeDefinition": Array [
+    "operation",
+    "type",
+  ],
+  "ScalarTypeDefinition": Array [
+    "name",
+    "directives",
+  ],
+  "SchemaDefinition": Array [
+    "directives",
+    "operationTypes",
+  ],
+  "SelectionSet": Array [
+    "selections",
+  ],
+  "StringValue": Array [
+    "value",
+  ],
+  "TypeExtensionDefinition": Array [
+    "definition",
+  ],
+  "UnionTypeDefinition": Array [
+    "name",
+    "types",
+    "directives",
+  ],
+  "Variable": Array [
+    "name",
+  ],
+  "VariableDefinition": Array [
+    "variable",
+    "type",
+    "defaultValue",
+  ],
+}
+`;
+
+exports[`Flipped Alias Keys 1`] = `
+Object {
+  "AST": Array [
+    "Name",
+    "Document",
+    "OperationDefinition",
+    "VariableDefinition",
+    "Variable",
+    "SelectionSet",
+    "Field",
+    "Argument",
+    "FragmentSpread",
+    "InlineFragment",
+    "FragmentDefinition",
+    "IntValue",
+    "FloatValue",
+    "StringValue",
+    "BooleanValue",
+    "NullValue",
+    "EnumValue",
+    "ListValue",
+    "ObjectValue",
+    "ObjectField",
+    "Directive",
+    "NamedType",
+    "ListType",
+    "NonNullType",
+    "SchemaDefinition",
+    "OperationTypeDefinition",
+    "ScalarTypeDefinition",
+    "ObjectTypeDefinition",
+    "FieldDefinition",
+    "InputValueDefinition",
+    "InterfaceTypeDefinition",
+    "UnionTypeDefinition",
+    "EnumTypeDefinition",
+    "EnumValueDefinition",
+    "InputObjectTypeDefinition",
+    "TypeExtensionDefinition",
+    "DirectiveDefinition",
+  ],
+  "Definition": Array [
+    "OperationDefinition",
+    "FragmentDefinition",
+  ],
+  "Selection": Array [
+    "Field",
+    "FragmentSpread",
+    "InlineFragment",
+  ],
+  "Type": Array [
+    "NamedType",
+    "ListType",
+    "NonNullType",
+  ],
+  "TypeDefinition": Array [
+    "ScalarTypeDefinition",
+    "ObjectTypeDefinition",
+    "InterfaceTypeDefinition",
+    "UnionTypeDefinition",
+    "EnumTypeDefinition",
+    "InputObjectTypeDefinition",
+  ],
+  "TypeSystemDefinition": Array [
+    "SchemaDefinition",
+    "TypeExtensionDefinition",
+    "DirectiveDefinition",
+  ],
+  "Value": Array [
+    "Variable",
+    "IntValue",
+    "FloatValue",
+    "StringValue",
+    "BooleanValue",
+    "NullValue",
+    "EnumValue",
+    "ListValue",
+    "ObjectValue",
+  ],
+}
+`;
+
+exports[`Node Fields 1`] = `
+Object {
+  "Argument": Object {
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "value": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "BooleanValue": Object {
+    "value": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "Directive": Object {
+    "arguments": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "DirectiveDefinition": Object {
+    "arguments": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "locations": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "Document": Object {
+    "definitions": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "EnumTypeDefinition": Object {
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "values": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "EnumValue": Object {
+    "value": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "EnumValueDefinition": Object {
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "Field": Object {
+    "alias": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "arguments": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "selectionSet": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+  },
+  "FieldDefinition": Object {
+    "arguments": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "type": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "FloatValue": Object {
+    "value": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "FragmentDefinition": Object {
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "selectionSet": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "typeCondition": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "FragmentSpread": Object {
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "InlineFragment": Object {
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "selectionSet": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "typeCondition": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+  },
+  "InputObjectTypeDefinition": Object {
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "fields": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "InputValueDefinition": Object {
+    "defaultValue": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "type": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "IntValue": Object {
+    "value": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "InterfaceTypeDefinition": Object {
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "fields": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "ListType": Object {
+    "type": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "ListValue": Object {
+    "values": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "Name": Object {
+    "value": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "NamedType": Object {
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "NonNullType": Object {
+    "type": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "NullValue": Object {},
+  "ObjectField": Object {
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "value": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "ObjectTypeDefinition": Object {
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "fields": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "interfaces": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "ObjectValue": Object {
+    "fields": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "OperationDefinition": Object {
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "operation": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "selectionSet": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "variableDefinitions": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+  },
+  "OperationTypeDefinition": Object {
+    "operation": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "type": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "ScalarTypeDefinition": Object {
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "SchemaDefinition": Object {
+    "directives": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "operationTypes": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "SelectionSet": Object {
+    "selections": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "StringValue": Object {
+    "value": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "TypeExtensionDefinition": Object {
+    "definition": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "UnionTypeDefinition": Object {
+    "directives": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "types": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "Variable": Object {
+    "name": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+  "VariableDefinition": Object {
+    "defaultValue": Object {
+      "optional": true,
+      "validate": [Function],
+    },
+    "type": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+    "variable": Object {
+      "optional": false,
+      "validate": [Function],
+    },
+  },
+}
+`;
