@@ -1,5 +1,5 @@
 // @flow
-const t = require('../index');
+const t = require("../index");
 
 type Validator = {
   validate: Function,
@@ -7,7 +7,9 @@ type Validator = {
 };
 
 export const BUILDER_KEYS: { [type: string]: Array<string> } = {};
-export const NODE_FIELDS: { [type: string]: { [fieldKey: string]: Validator } } = {};
+export const NODE_FIELDS: {
+  [type: string]: { [fieldKey: string]: Validator }
+} = {};
 export const ALIAS_KEYS: { [type: string]: Array<string> } = {};
 
 type Option = {
@@ -42,11 +44,11 @@ export default function defineType(
 
 function getType(val) {
   if (Array.isArray(val)) {
-    return 'array';
+    return "array";
   } else if (val === null) {
-    return 'null';
+    return "null";
   } else if (val === undefined) {
-    return 'undefined';
+    return "undefined";
   } else {
     return typeof val;
   }
@@ -91,8 +93,9 @@ export function assertNodeType(...types: Array<string>): Function {
 
     if (!valid) {
       throw new TypeError(
-        `Property ${key} of ${node.type} expected node to be of a type ${JSON.stringify(types)} ` +
-          `but instead got ${JSON.stringify(val && val.type)}`
+        `Property ${key} of ${node.type} expected node to be of a type ${JSON.stringify(
+          types
+        )} ` + `but instead got ${JSON.stringify(val && val.type)}`
       );
     }
   }
@@ -106,8 +109,9 @@ export function assertNodeOrValueType(...types: Array<string>): Function {
 
     if (!valid) {
       throw new TypeError(
-        `Property ${key} of ${node.type} expected node to be of a type ${JSON.stringify(types)} ` +
-          `but instead got ${JSON.stringify(val && val.type)}`
+        `Property ${key} of ${node.type} expected node to be of a type ${JSON.stringify(
+          types
+        )} ` + `but instead got ${JSON.stringify(val && val.type)}`
       );
     }
   }
@@ -120,7 +124,9 @@ export function assertValueType(type: string): Function {
     const valid = getType(val) === type;
 
     if (!valid) {
-      throw new TypeError(`Property ${key} expected type of ${type} but got ${getType(val)}`);
+      throw new TypeError(
+        `Property ${key} expected type of ${type} but got ${getType(val)}`
+      );
     }
   }
 
@@ -128,5 +134,5 @@ export function assertValueType(type: string): Function {
 }
 
 export function assertArrayOf(cb: Function): Function {
-  return chain(assertValueType('array'), assertEach(cb));
+  return chain(assertValueType("array"), assertEach(cb));
 }

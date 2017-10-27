@@ -1,4 +1,6 @@
-src
 .babelrc
-.eslintrc
 .flowconfig
+src/**/*.test.js
+lib/**/*.test.js
+src/**/__snapshots__
+lib/**/__snapshots__

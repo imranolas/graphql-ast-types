@@ -3,6 +3,22 @@
   "version": "0.3.0",
   "main": "lib/index.js",
   "license": "MIT",
+  "keywords": [
+    "graphql",
+    "ast",
+    "types",
+    "graphql-ast-types"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imranolas/graphql-ast-types.git"
+  },
+  "files": [
+    "README.md",
+    "lib",
+    "src",
+    "api.md"
+  ],
   "scripts": {
     "test": "jest src/**",
     "test:watch": "yarn test -- --watch",
@@ -10,7 +26,11 @@
     "build": "babel src --out-dir lib --source-maps inline -D",
     "generate": "node ./generate/index.js",
     "prepublishOnly": "yarn build",
-    "flow": "./node_modules/.bin/flow"
+    "flow": "./node_modules/.bin/flow",
+    "lint-staged": "lint-staged"
+  },
+  "bugs": {
+    "url": "https://github.com/imranolas/graphql-ast-types/issues"
   },
   "dependencies": {},
   "peerDependencies": {
@@ -19,26 +39,31 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.1",
     "babel-generator": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-flow": "^6.23.0",
     "babel-template": "^6.26.0",
     "babel-traverse": "^6.26.0",
     "babel-types": "^6.26.0",
-    "eslint": "^4.8.0",
-    "eslint-config-formidable": "^3.0.0",
-    "eslint-plugin-filenames": "^1.2.0",
-    "eslint-plugin-flowtype": "^2.39.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-prettier": "^2.3.1",
     "flow-bin": "^0.57.3",
     "flow-parser": "^0.57.3",
     "graphql": "^0.11.7",
     "jest": "^21.2.1",
+    "lint-staged": "^4.3.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.7.4",
-    "prettier-eslint": "^8.2.0",
     "strip-indent": "^2.0.0"
-  }
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src/"
+    ]
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "pre-commit": "lint-staged"
 }
