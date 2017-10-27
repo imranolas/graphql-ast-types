@@ -131,7 +131,7 @@ const getNodeAliases = (nodeName, unions) => {
 };
 
 const defineTypeCallTemplate = (nameAST, argAST, fieldAST, aliasAST) => {
-  return tea.callExpression(tea.identifier('defineType'), [
+  return tea.arrayExpression([
     nameAST,
     tea.objectExpression([
       tea.objectProperty(tea.identifier('builder'), argAST),
@@ -143,7 +143,7 @@ const defineTypeCallTemplate = (nameAST, argAST, fieldAST, aliasAST) => {
 
 const getArgsFromFields = fields => fields.map(field => field.key.name);
 
-const buildDefineTypeCall = (nodeName, unions, node) => {
+const buildTypeDefinition = (nodeName, unions, node) => {
   const name = getNodeNameWithoutSuffix(nodeName);
   const fields = getNodeBabelFields(node);
   const args = getArgsFromFields(fields);
@@ -159,12 +159,12 @@ const buildDefineTypeCall = (nodeName, unions, node) => {
 
 const buildBabelTemplates = ast => {
   const { unions, nodes } = collectNodes(ast);
-
-  return Object.keys(nodes).map(nodeName => {
+  const defs = Object.keys(nodes).map(nodeName => {
     const node = nodes[nodeName];
-    const { code } = generate(buildDefineTypeCall(nodeName, unions, node));
-    return `/* Auto-generated Definition: ${nodeName} */\n${code}\n`;
+    return buildTypeDefinition(nodeName, unions, node);
   });
+
+  return generate(tea.arrayExpression(defs)).code;
 };
 
 const definitionTemplate = body => `
@@ -176,15 +176,10 @@ import {
   assertArrayOf
 } from './index';
 
-export default defineType => {
-  ${body}
-};
+export default () => ${body};
 `;
 
-const generateDefinitionContent = ast => {
-  const definitionCalls = buildBabelTemplates(ast);
-  return definitionTemplate(definitionCalls.join('\n'));
-};
+const generateDefinitionContent = ast => definitionTemplate(buildBabelTemplates(ast));
 
 module.exports = function generateDefinitionFile(ast) {
   return generateDefinitionContent(ast);
