@@ -18,7 +18,7 @@ _The implementation here mimics that of `babel-types`. Thanks Babel team._
 
 The following is an example of how to build a simple query with AST types.
 
-```
+```js
 const ast = t.document([
   t.operationDefinition(
     'query',
