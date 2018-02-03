@@ -73,9 +73,10 @@ export function assertEach(callback: Function): Function {
   return validator;
 }
 
-export function assertOneOf(...vals: Array<string>): Function {
+export function assertOneOf(vals: Array<string>): Function {
   function validate(node, key, val) {
-    if (vals.indexOf(val) < 0) {
+      const valid = vals.some(type => t.is(type, val));
+      if (!valid) {
       throw new TypeError(
         `Property ${key} expected value to be one of ${JSON.stringify(
           vals
