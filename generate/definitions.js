@@ -1,30 +1,31 @@
-const tea = require('babel-types'); // The only right way to name this
-const { default: generate } = require('babel-generator');
+const tea = require("babel-types"); // The only right way to name this
+const { default: generate } = require("babel-generator");
 
 const {
   collectNodes,
   getNodeNameWithoutSuffix,
   isPropBlacklisted,
   isNodeName
-} = require('./helpers');
+} = require("./helpers");
 
 const nodeTypeAssertTemplate = argAST =>
-  tea.callExpression(tea.identifier('assertNodeType'), [argAST]);
+  tea.callExpression(tea.identifier("assertNodeType"), [argAST]);
 
 const typeAssertTemplate = argAST =>
-  tea.callExpression(tea.identifier('assertValueType'), [argAST]);
+  tea.callExpression(tea.identifier("assertValueType"), [argAST]);
 
 const valueOfNodeType = valueNode => {
   if (
-    valueNode.type !== 'GenericTypeAnnotation' ||
-    valueNode.id.type !== 'Identifier' ||
-    (!isNodeName(valueNode.id.name) && valueNode.id.name !== 'OperationTypeNode')
+    valueNode.type !== "GenericTypeAnnotation" ||
+    valueNode.id.type !== "Identifier" ||
+    (!isNodeName(valueNode.id.name) &&
+      valueNode.id.name !== "OperationTypeNode")
   ) {
     return undefined;
   }
 
-  if (valueNode.id.name === 'OperationTypeNode') {
-    return typeAssertTemplate(tea.stringLiteral('string'));
+  if (valueNode.id.name === "OperationTypeNode") {
+    return typeAssertTemplate(tea.stringLiteral("string"));
   }
 
   const name = getNodeNameWithoutSuffix(valueNode.id.name);
@@ -32,23 +33,23 @@ const valueOfNodeType = valueNode => {
 };
 
 const valueOfType = valueNode => {
-  if (valueNode.type === 'StringTypeAnnotation') {
-    return typeAssertTemplate(tea.stringLiteral('string'));
-  } else if (valueNode.type === 'BooleanTypeAnnotation') {
-    return typeAssertTemplate(tea.stringLiteral('boolean'));
+  if (valueNode.type === "StringTypeAnnotation") {
+    return typeAssertTemplate(tea.stringLiteral("string"));
+  } else if (valueNode.type === "BooleanTypeAnnotation") {
+    return typeAssertTemplate(tea.stringLiteral("boolean"));
   }
 
   return undefined;
 };
 
 const arrayTypeAssertTemplate = argAST =>
-  tea.callExpression(tea.identifier('assertArrayOf'), [argAST]);
+  tea.callExpression(tea.identifier("assertArrayOf"), [argAST]);
 
 const valueOfArray = valueNode => {
   if (
-    valueNode.type !== 'GenericTypeAnnotation' ||
-    valueNode.id.type !== 'Identifier' ||
-    valueNode.id.name !== 'Array'
+    valueNode.type !== "GenericTypeAnnotation" ||
+    valueNode.id.type !== "Identifier" ||
+    valueNode.id.name !== "Array"
   ) {
     return undefined;
   }
@@ -60,14 +61,17 @@ const valueOfArray = valueNode => {
 };
 
 const unionNodeTypeAssertTemplate = names =>
-  tea.callExpression(tea.identifier('assertOneOf'), [
-    tea.arrayExpression(names.map(name => tea.stringLiteral(name)))
-  ]);
+  tea.callExpression(
+    tea.identifier("assertOneOf"),
+    names.map(name => tea.stringLiteral(getNodeNameWithoutSuffix(name)))
+  );
 
 const valueOfUnionNodeType = valueNode => {
   if (
-    valueNode.type !== 'UnionTypeAnnotation' ||
-    !valueNode.types.every(n => n.type === 'GenericTypeAnnotation' && n.id.type === 'Identifier')
+    valueNode.type !== "UnionTypeAnnotation" ||
+    !valueNode.types.every(
+      n => n.type === "GenericTypeAnnotation" && n.id.type === "Identifier"
+    )
   ) {
     return undefined;
   }
@@ -78,12 +82,15 @@ const valueOfUnionNodeType = valueNode => {
 
 const determineValueAssertion = valueNode => {
   let node = valueNode;
-  if (node.type === 'NullableTypeAnnotation') {
+  if (node.type === "NullableTypeAnnotation") {
     node = node.typeAnnotation;
   }
 
   const template =
-    valueOfUnionNodeType(node) || valueOfArray(node) || valueOfType(node) || valueOfNodeType(node);
+    valueOfUnionNodeType(node) ||
+    valueOfArray(node) ||
+    valueOfType(node) ||
+    valueOfNodeType(node);
 
   if (template === undefined) {
     throw new TypeError(`Unrecognised value node of type ${node.type}!`);
@@ -94,8 +101,11 @@ const determineValueAssertion = valueNode => {
 
 const fieldDefinitionTemplate = (isOptional, assertionAST) =>
   tea.objectExpression([
-    tea.objectProperty(tea.identifier('optional'), tea.booleanLiteral(isOptional)),
-    tea.objectProperty(tea.identifier('validate'), assertionAST)
+    tea.objectProperty(
+      tea.identifier("optional"),
+      tea.booleanLiteral(isOptional)
+    ),
+    tea.objectProperty(tea.identifier("validate"), assertionAST)
   ]);
 
 const getNodeBabelFields = node => {
@@ -134,9 +144,9 @@ const defineTypeCallTemplate = (nameAST, argAST, fieldAST, aliasAST) => {
   return tea.arrayExpression([
     nameAST,
     tea.objectExpression([
-      tea.objectProperty(tea.identifier('builder'), argAST),
-      tea.objectProperty(tea.identifier('fields'), fieldAST),
-      tea.objectProperty(tea.identifier('aliases'), aliasAST)
+      tea.objectProperty(tea.identifier("builder"), argAST),
+      tea.objectProperty(tea.identifier("fields"), fieldAST),
+      tea.objectProperty(tea.identifier("aliases"), aliasAST)
     ])
   ]);
 };
@@ -160,15 +170,18 @@ const buildDefineTypeCall = (nodeName, unions, node) => {
 const buildBabelTemplates = ast => {
   const { unions, nodes } = collectNodes(ast);
 
-  return generate(tea.arrayExpression(
-    Object.keys(nodes).map(nodeName => {
-      const node = nodes[nodeName];
-      return buildDefineTypeCall(nodeName, unions, node);
-    })
-  )).code;
+  return generate(
+    tea.arrayExpression(
+      Object.keys(nodes).map(nodeName => {
+        const node = nodes[nodeName];
+        return buildDefineTypeCall(nodeName, unions, node);
+      })
+    )
+  ).code;
 };
 
-const definitionTemplate = body => `
+const definitionTemplate = body =>
+  `
 /* These are auto-generated definitions: Please do not edit this file directly */
 
 import {
