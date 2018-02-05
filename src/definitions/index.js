@@ -75,7 +75,7 @@ export function assertEach(callback: Function): Function {
 
 export function assertOneOf(...vals: Array<string>): Function {
   function validate(node, key, val) {
-    if (vals.indexOf(val) < 0) {
+    if (vals.indexOf(val.kind) < 0) {
       throw new TypeError(
         `Property ${key} expected value to be one of ${JSON.stringify(
           vals
