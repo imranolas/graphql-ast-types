@@ -34,7 +34,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "graphql": "^0.11.7"
+    "graphql": "^0.13.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -47,7 +47,7 @@
     "babel-types": "^6.26.0",
     "flow-bin": "^0.57.3",
     "flow-parser": "^0.57.3",
-    "graphql": "^0.11.7",
+    "graphql": "^0.13.2",
     "jest": "^21.2.1",
     "lint-staged": "^4.3.0",
     "pre-commit": "^1.2.2",
