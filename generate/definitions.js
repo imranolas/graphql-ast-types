@@ -49,7 +49,7 @@ const valueOfArray = valueNode => {
   if (
     valueNode.type !== "GenericTypeAnnotation" ||
     valueNode.id.type !== "Identifier" ||
-    valueNode.id.name !== "Array"
+    (valueNode.id.name !== "Array" && valueNode.id.name !== "$ReadOnlyArray")
   ) {
     return undefined;
   }
