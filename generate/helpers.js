@@ -1,8 +1,8 @@
-const { default: traverse } = require('babel-traverse');
+const { default: traverse } = require("babel-traverse");
 
 // Node constants
-const blacklistedNodes = ['OperationTypeNode'];
-const blacklistedProps = ['kind', 'loc'];
+const blacklistedNodes = ["OperationTypeNode", "ASTKindToNode"];
+const blacklistedProps = ["kind", "loc"];
 
 const isPropBlacklisted = prop => blacklistedProps.includes(prop);
 const isNodeBlacklisted = nodeType => blacklistedNodes.includes(nodeType);
@@ -12,18 +12,18 @@ const isNodeName = name => nodeNameRe.test(name);
 
 // Identifies node definitions of the shape `type XNode = { ... }`
 const isNodeTypeAlias = node =>
-  typeof node.id === 'object' &&
-  node.id.type === 'Identifier' &&
-  typeof node.right === 'object' &&
-  node.right.type === 'ObjectTypeAnnotation' &&
+  typeof node.id === "object" &&
+  node.id.type === "Identifier" &&
+  typeof node.right === "object" &&
+  node.right.type === "ObjectTypeAnnotation" &&
   isNodeName(node.id.name);
 
 // Identifies node definitions of the shape `type VirtualNode = XNode | YNode ...`
 const isUnionTypeAlias = node =>
-  typeof node.id === 'object' &&
-  node.id.type === 'Identifier' &&
-  typeof node.right === 'object' &&
-  node.right.type === 'UnionTypeAnnotation' &&
+  typeof node.id === "object" &&
+  node.id.type === "Identifier" &&
+  typeof node.right === "object" &&
+  node.right.type === "UnionTypeAnnotation" &&
   !blacklistedNodes.includes(node.id.name) &&
   isNodeName(node.id.name);
 
@@ -46,7 +46,9 @@ function collectNodes(ast) {
   };
 
   const addNode = (nodeName, objectType) => {
-    nodes[nodeName] = objectType;
+    if (!blacklistedNodes.includes(nodeName)) {
+      nodes[nodeName] = objectType;
+    }
   };
 
   traverse(ast, {

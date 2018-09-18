@@ -59,14 +59,6 @@ t.assertDefinition(node: any): boolean
 
 ## Builders
 
-### ASTKindTo
-
-t.aSTKindTo(NamedType: NamedTypeNode, Name: NameNode, OperationDefinition: OperationDefinitionNode, VariableDefinition: VariableDefinitionNode, Variable: VariableNode, SelectionSet: SelectionSetNode, Field: FieldNode, Argument: ArgumentNode, FragmentSpread: FragmentSpreadNode, InlineFragment: InlineFragmentNode, FragmentDefinition: FragmentDefinitionNode, IntValue: IntValueNode, FloatValue: FloatValueNode, StringValue: StringValueNode, BooleanValue: BooleanValueNode, NullValue: NullValueNode, EnumValue: EnumValueNode, ListValue: ListValueNode, ObjectValue: ObjectValueNode, ObjectField: ObjectFieldNode, Directive: DirectiveNode, Document: DocumentNode, ListType: ListTypeNode, NonNullType: NonNullTypeNode, SchemaDefinition: SchemaDefinitionNode, OperationTypeDefinition: OperationTypeDefinitionNode, ScalarTypeDefinition: ScalarTypeDefinitionNode, ObjectTypeDefinition: ObjectTypeDefinitionNode, FieldDefinition: FieldDefinitionNode, InputValueDefinition: InputValueDefinitionNode, InterfaceTypeDefinition: InterfaceTypeDefinitionNode, UnionTypeDefinition: UnionTypeDefinitionNode, EnumTypeDefinition: EnumTypeDefinitionNode, EnumValueDefinition: EnumValueDefinitionNode, InputObjectTypeDefinition: InputObjectTypeDefinitionNode, ScalarTypeExtension: ScalarTypeExtensionNode, ObjectTypeExtension: ObjectTypeExtensionNode, InterfaceTypeExtension: InterfaceTypeExtensionNode, UnionTypeExtension: UnionTypeExtensionNode, EnumTypeExtension: EnumTypeExtensionNode, InputObjectTypeExtension: InputObjectTypeExtensionNode, DirectiveDefinition: DirectiveDefinitionNode): [ASTKindToNode](https://github.com/graphql/graphql-js/blob/v0.11.7/src/language/ast.js#L138)
-
-t.isASTKindTo(node: any): boolean
-
-t.assertASTKindTo(node: any): void
-
 ### Name
 
 t.name(value: StringTypeAnnotation): [NameNode](https://github.com/graphql/graphql-js/blob/v0.11.7/src/language/ast.js#L185)
